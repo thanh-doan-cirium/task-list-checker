@@ -16,21 +16,10 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       # Get the pull request data using GitHub's API
-      - name: Check for incomplete tasks
-        id: check-tasks
-        run: |
-          incomplete_tasks=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            "${{ github.event.pull_request.url }}" | \
-            jq '.body' | grep -c '\[ \]')
-          echo "Found $incomplete_tasks incomplete tasks"
-
-          if [ "$incomplete_tasks" -gt 0 ]; then
-            echo "There are incomplete tasks in the PR description"
-            exit 1
-          else
-            echo "All tasks are complete"
-          fi
+      - name: Run task-list-checker
+        run: node index.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     # Notify the user if the task check fails
     outputs:
