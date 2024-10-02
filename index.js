@@ -21,6 +21,20 @@ async function run() {
 
     if (incompleteTasks > 0) {
       core.setFailed(`There are ${incompleteTasks} incomplete tasks in the PR description.`);
+
+      // Create a check run with a "pending" status
+      await octokit.checks.create({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        name: 'Task List Checker',
+        head_sha: context.payload.pull_request.head.sha,
+        status: 'completed',
+        conclusion: 'action_required',
+        output: {
+          title: 'Incomplete tasks',
+          summary: `There are ${incompleteTasks} incomplete tasks in the PR description. Please complete them before merging.`
+        }
+      });
     } else {
       core.info('All tasks are complete.');
     }
