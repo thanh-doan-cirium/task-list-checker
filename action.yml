@@ -1,0 +1,9 @@
+name: 'Task List Checker'
+description: 'Check for incomplete task list items in a pull request description'
+inputs:
+  github-token:
+    description: 'GitHub token'
+    required: true
+runs:
+  using: 'node12'
+  main: 'index.js'
