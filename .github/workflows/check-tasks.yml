@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
       # Run task list checker
       - name: Run task-list-checker
         id: check_tasks  # Give this step an ID
