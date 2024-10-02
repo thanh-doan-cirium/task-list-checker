@@ -2,7 +2,7 @@ name: Check Incomplete Task List in PR
 
 on:
   pull_request:
-    types: [opened, edited, reopened]
+    types: [opened, edited, reopened, synchronize]
 
 jobs:
   check_tasks:
