@@ -12,6 +12,8 @@ jobs:
       # Checkout the code
       - name: Checkout repository
         uses: thanh-doan-cirium/task-list-checker@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       # Get the pull request data using GitHub's API
       - name: Check for incomplete tasks

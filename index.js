@@ -3,11 +3,20 @@ const core = require('@actions/core');
 
 async function run() {
   try {
+    // Get the GitHub token from the action input
     const token = core.getInput('github-token');
+    if (!token) {
+      throw new Error('GitHub token is missing');
+    }
+
+    // Initialize the Octokit client with the token
     const octokit = github.getOctokit(token);
 
+    // Get the pull request body from the context
     const { context } = github;
     const prBody = context.payload.pull_request.body;
+
+    // Check for incomplete tasks (task checkboxes)
     const incompleteTasks = (prBody.match(/- \[ \]/g) || []).length;
 
     if (incompleteTasks > 0) {
