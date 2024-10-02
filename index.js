@@ -16,6 +16,11 @@ async function run() {
     const { context } = github;
     const prBody = context.payload.pull_request.body;
 
+    if (!prBody) {
+      core.setFailed('Pull request body is undefined.');
+      return;
+    }
+
     // Check for incomplete tasks (task checkboxes)
     const incompleteTasks = (prBody.match(/- \[ \]/g) || []).length;
 
@@ -23,7 +28,7 @@ async function run() {
       core.setFailed(`There are ${incompleteTasks} incomplete tasks in the PR description.`);
 
       // Create a check run with a "pending" status
-      await octokit.checks.create({
+      await octokit.rest.checks.create({
         owner: context.repo.owner,
         repo: context.repo.repo,
         name: 'Task List Checker',
