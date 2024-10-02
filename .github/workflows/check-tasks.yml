@@ -2,7 +2,7 @@ name: Check Incomplete Task List in PR
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, edited]
 
 permissions:
   checks: write  # Grant permission to create check runs
@@ -15,9 +15,7 @@ jobs:
     steps:
       # Checkout the code
       - name: Checkout repository
-        uses: thanh-doan-cirium/task-list-checker@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/checkout@v2
 
       # Get the pull request data using GitHub's API
       - name: Run task-list-checker
