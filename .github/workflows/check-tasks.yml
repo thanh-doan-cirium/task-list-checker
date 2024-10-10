@@ -1,23 +1,27 @@
 name: Check Incomplete Task List in PR
-
 on:
   pull_request:
     types: [opened, edited, reopened]
-
 jobs:
   check_tasks:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      # Run task list checker
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+
+      - name: Install dependencies
+        run: npm install
+
       - name: Run task-list-checker
-        id: check_tasks  # Give this step an ID
-        run: node index.js
+        id: check_tasks
+        run: npm run check-tasks
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    # Notify the user if the task check fails
     outputs:
-      task_check_passed: ${{ steps.check_tasks.outcome }}  # Referencing the ID of the step that runs the check
+      task_check_passed: ${{ steps.check_tasks.outcome }}
