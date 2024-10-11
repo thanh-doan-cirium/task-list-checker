@@ -1,3 +1,10 @@
 # How to check task list
 
-This is a document for test pr with task list with github action so it cannot be merged. I am testing now. Currently I am testing a new way
+# How to check task list
+
+This document describes a test pull request with a task list and GitHub Action.
+
+Key points:
+- The PR cannot be merged (for testing purposes)
+- Currently testing a new approach
+- Using Node.js version 20.14.0
